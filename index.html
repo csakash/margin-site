@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Margin — notes that float above everything</title>
+<meta name="description" content="A floating, local-first markdown notepad for macOS. Stays above full-screen apps, snaps to any edge, and minimises to a thin line. Free and open source.">
+<meta property="og:title" content="Margin — notes that float above everything">
+<meta property="og:description" content="A floating markdown notepad for macOS that stays above full-screen apps. Free and open source.">
+<meta property="og:image" content="/og-icon.png">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000; --line:rgba(255,255,255,.08); --tx:#f2f2f3; --tx2:#a1a1a6; --tx3:#626267;
+  --spring:cubic-bezier(.32,.72,0,1); --out:cubic-bezier(.23,1,.32,1);
+  --ui:'Geist',system-ui,-apple-system,sans-serif; --mono:'Geist Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 var(--ui);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:#fff;color:#000}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* nav */
+nav{position:fixed;inset:0 0 auto;z-index:50;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(0,0,0,.55);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;height:60px;gap:28px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em}
+.logo img{width:26px;height:26px}
+nav .links{display:flex;gap:24px;margin-left:auto;font-size:14px;color:var(--tx2)}
+nav .links a:hover{color:var(--tx)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 20px;border-radius:99px;font-weight:500;font-size:15px;transition:transform .15s var(--out),box-shadow .3s,background .2s;position:relative;overflow:hidden;isolation:isolate}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:#fff;color:#000;box-shadow:0 0 0 1px #fff,0 0 24px rgba(255,255,255,.35),0 0 80px rgba(255,255,255,.12)}
+.btn.primary::after{content:"";position:absolute;inset:-40% -20%;background:linear-gradient(100deg,transparent 40%,rgba(255,255,255,.0) 44%,rgba(0,0,0,.12) 50%,transparent 56%);transform:translateX(-80%);transition:transform .9s var(--out)}
+@media (hover:hover){.btn.primary:hover{box-shadow:0 0 0 1px #fff,0 0 36px rgba(255,255,255,.55),0 0 120px rgba(255,255,255,.2)}.btn.primary:hover::after{transform:translateX(80%)}}
+.btn.ghost{color:var(--tx);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+@media (hover:hover){.btn.ghost:hover{background:rgba(255,255,255,.06)}}
+.btn svg{width:17px;height:17px}
+nav .btn{height:36px;padding:0 16px;font-size:13.5px}
+
+/* hero */
+.hero{position:relative;padding:150px 0 40px;text-align:center}
+.hero::before{content:"";position:absolute;left:50%;top:-180px;width:900px;height:700px;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,255,255,.12),rgba(255,255,255,.03) 55%,transparent 75%)}
+.appicon{position:relative;width:112px;height:112px;margin:0 auto 28px}
+.appicon img{width:100%;height:100%;position:relative;z-index:1;filter:drop-shadow(0 20px 40px rgba(0,0,0,.8))}
+.appicon::before{content:"";position:absolute;inset:14%;border-radius:30%;background:#fff;opacity:.12;filter:blur(36px)}
+.appicon .sh{position:absolute;inset:3%;z-index:2;border-radius:23%;overflow:hidden;mix-blend-mode:screen;pointer-events:none}
+.appicon .sh::after{content:"";position:absolute;top:-30%;bottom:-30%;width:45%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25) 48%,rgba(255,255,255,.5) 50%,rgba(255,255,255,.25) 52%,transparent);transform:translateX(-160%) skewX(-18deg);animation:sweep 6s var(--out) infinite 1.2s}
+@keyframes sweep{0%{transform:translateX(-160%) skewX(-18deg)}28%,100%{transform:translateX(330%) skewX(-18deg)}}
+h1{font-size:clamp(42px,7vw,82px);line-height:1.02;letter-spacing:-.045em;font-weight:600;margin:0 auto 22px;max-width:900px;text-wrap:balance}
+h1 em{font-style:normal;color:transparent;background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,.45));-webkit-background-clip:text;background-clip:text}
+.sub{font-size:clamp(17px,2vw,20px);color:var(--tx2);max-width:620px;margin:0 auto 36px;text-wrap:pretty}
+.ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.meta{margin-top:18px;font:12px var(--mono);color:var(--tx3);letter-spacing:.02em}
+
+/* hero stage */
+.stage{position:relative;margin:64px auto 0;max-width:1080px;aspect-ratio:16/9.4;border-radius:20px;overflow:hidden;background:#0a0a0a;
+  box-shadow:0 0 0 1px rgba(255,255,255,.08),0 40px 120px rgba(0,0,0,.9),0 0 140px rgba(255,255,255,.05)}
+.stage .bar{position:absolute;top:0;left:0;right:0;height:30px;display:flex;align-items:center;gap:7px;padding:0 14px;border-bottom:1px solid rgba(255,255,255,.05);background:#0d0d0e;z-index:2}
+.stage .bar i{width:10px;height:10px;border-radius:50%;background:#2a2a2c}
+.stage .bar span{margin-left:auto;margin-right:auto;font:11px var(--mono);color:#4a4a4f}
+.article{position:absolute;inset:30px 0 0;padding:6% 40% 0 9%;color:#8f8f94;font:clamp(11px,1.45vw,17px)/1.7 'Newsreader',Georgia,serif;text-align:left}
+.article h3{font:500 clamp(18px,2.6vw,34px)/1.12 'Newsreader',serif;color:#ececee;margin:0 0 3%;letter-spacing:-.02em}
+.article .k{font:500 clamp(8px,.9vw,11px) var(--mono);letter-spacing:.1em;color:#55555a;margin-bottom:2%}
+.article p{margin:0 0 3%}
+.article mark{background:rgba(255,255,255,.88);color:#000;border-radius:2px}
+
+.glass{position:absolute;right:3.5%;top:calc(30px + 6%);width:34%;height:80%;border-radius:clamp(12px,1.8vw,22px);text-align:left;overflow:hidden;
+  background:linear-gradient(180deg,rgba(34,34,37,.86),rgba(12,12,13,.92) 45%,rgba(6,6,7,.95));backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  box-shadow:0 0 0 1px rgba(0,0,0,.7),0 30px 60px -10px rgba(0,0,0,.9),0 0 100px 10px rgba(255,255,255,.04);
+  transition:all .7s var(--spring);--mx:50%;--my:-30%}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;z-index:3;
+  background:radial-gradient(160px circle at var(--mx) var(--my),rgba(255,255,255,.8),transparent 70%),linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,.06) 25%,rgba(255,255,255,.03) 75%,rgba(255,255,255,.14));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.glass::after{content:"";position:absolute;left:0;right:0;top:0;height:60%;pointer-events:none;background:radial-gradient(60% 45% at 50% -10%,rgba(255,255,255,.1),transparent 70%)}
+.glass .in{position:absolute;inset:0;padding:6% 7%;transition:opacity .25s;font-size:clamp(8px,1vw,13px);color:#d9d9dc}
+.glass .hd{display:flex;align-items:center;justify-content:space-between;padding-bottom:5%;margin-bottom:6%;border-bottom:1px solid rgba(255,255,255,.07);color:#9a9a9f;font-weight:500}
+.glass .hd b{display:flex;gap:9%;color:#555;font-weight:400;width:32%;justify-content:flex-end}
+.glass .hd b i{font-style:normal}
+.glass h4{font-size:1.75em;line-height:1.15;margin:0 0 6%;color:#fff;letter-spacing:-.02em;font-weight:600}
+.glass h4 s{text-decoration:none;color:#555;font-size:.55em;font-weight:400;margin-right:.3em}
+.glass .q{position:relative;padding-left:7%;margin:0 0 7%;color:#ececee}
+.glass .q::before{content:"";position:absolute;left:0;top:3%;bottom:3%;width:2px;background:#fff;box-shadow:0 0 8px #fff;border-radius:2px}
+.glass .q small{display:block;font:.8em var(--mono);color:#555;margin-top:3%}
+.glass .td{display:flex;gap:6%;align-items:center;margin:0 0 3%}
+.glass .td i{width:1.15em;height:1.15em;border-radius:.3em;border:1.5px solid #555;flex:none}
+.glass .td.on i{background:#fff;border-color:#fff;box-shadow:0 0 8px rgba(255,255,255,.7)}
+.glass .td.on span{color:#555;text-decoration:line-through}
+.glass .ft{position:absolute;left:0;right:0;bottom:0;height:13%;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:flex-end;padding:0 6%}
+.glass .ft span{font-size:.9em;padding:.4em 1em;border-radius:99px;background:rgba(255,255,255,.06);color:#bbb}
+.typing::after{content:"";display:inline-block;width:1.5px;height:1em;background:#fff;vertical-align:-.12em;margin-left:1px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.glass .sheen{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none;mix-blend-mode:screen;z-index:4}
+.glass .sheen::after{content:"";position:absolute;top:-30%;bottom:-30%;width:55%;transform:translateX(-140%) skewX(-18deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06) 30%,rgba(255,255,255,.3) 48%,rgba(255,255,255,.55) 50%,rgba(255,255,255,.3) 52%,rgba(255,255,255,.06) 70%,transparent)}
+.glass.glint .sheen::after{animation:gl 1.15s var(--out)}
+@keyframes gl{to{transform:translateX(260%) skewX(-18deg)}}
+.glass .line{position:absolute;left:50%;top:50%;width:2px;height:40%;transform:translate(-50%,-50%);background:#fff;border-radius:2px;box-shadow:0 0 6px #fff,0 0 18px rgba(255,255,255,.4);opacity:0;transition:opacity .3s .3s}
+.glass.min{width:.75%;min-width:7px;height:13%;top:calc(30px + 40%);right:.6%;border-radius:99px}
+.glass.min .in{opacity:0;transition-delay:0s}
+.glass.min .line{opacity:.7}
+.stage .tag{position:absolute;bottom:3%;left:50%;transform:translateX(-50%);font:11px var(--mono);color:#6a6a6e;background:rgba(255,255,255,.04);border:1px solid var(--line);padding:5px 12px;border-radius:99px;white-space:nowrap;transition:opacity .3s}
+
+/* sections */
+section{padding:120px 0 0}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--tx3);margin-bottom:14px}
+h2{font-size:clamp(32px,4.4vw,52px);line-height:1.06;letter-spacing:-.035em;font-weight:600;margin:0 0 18px;max-width:760px;text-wrap:balance}
+.lede{color:var(--tx2);max-width:600px;margin:0 0 48px;font-size:18px;text-wrap:pretty}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{position:relative;border-radius:20px;padding:26px 24px 24px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.015));overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 0 0 1px rgba(255,255,255,.06);--cx:50%;--cy:-20%;transition:transform .35s var(--spring)}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;opacity:0;transition:opacity .25s;
+  background:radial-gradient(220px circle at var(--cx) var(--cy),rgba(255,255,255,.55),transparent 70%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(260px circle at var(--cx) var(--cy),rgba(255,255,255,.06),transparent 70%)}
+@media (hover:hover){.card:hover{transform:translateY(-3px)}.card:hover::before,.card:hover::after{opacity:1}}
+.card .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;margin-bottom:22px;background:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+.card .ic svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px rgba(255,255,255,.5))}
+.card h3{font-size:18px;font-weight:600;letter-spacing:-.015em;margin:0 0 8px}
+.card p{margin:0;color:var(--tx2);font-size:15px}
+.card.wide{grid-column:span 2}
+
+.spots{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
+.screen{position:relative;aspect-ratio:16/10;border-radius:16px;background:#070707;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 30px 80px rgba(0,0,0,.8);overflow:hidden}
+.screen::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.14) 1px,transparent 1.3px);background-size:22px 22px;opacity:.5}
+.slot{position:absolute;border-radius:99px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);transition:all .5s var(--spring)}
+.slot.v{width:7px;height:22%}.slot.h{height:7px;width:22%}.slot.c{width:14px;height:14px}
+.slot.on{background:#fff;box-shadow:0 0 0 1px #fff,0 0 16px 3px rgba(255,255,255,.8),0 0 60px 14px rgba(255,255,255,.25);transform:scale(1.25)}
+.keys{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+kbd{font:500 13px var(--mono);padding:6px 11px;border-radius:9px;background:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 0 0 1px rgba(255,255,255,.08);color:#fff}
+.kv{display:flex;align-items:center;gap:10px;color:var(--tx2);font-size:14px}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
+.stat{border-radius:18px;padding:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px rgba(255,255,255,.06)}
+.stat .v{font-size:38px;font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.stat .k{font:12px var(--mono);color:var(--tx3);margin-top:2px}
+
+.final{text-align:center;padding:140px 0 120px;position:relative}
+.final::before{content:"";position:absolute;left:50%;top:40px;width:700px;height:500px;transform:translateX(-50%);pointer-events:none;background:radial-gradient(closest-side,rgba(255,255,255,.08),transparent 70%)}
+.final h2{margin:0 auto 18px}
+.final .lede{margin:0 auto 34px}
+footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--tx3);font-size:13px}
+footer .wrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+footer .wrap a:hover{color:var(--tx)}
+footer .r{margin-left:auto;display:flex;gap:20px}
+
+.reveal{opacity:0;transform:translateY(16px);filter:blur(6px);transition:opacity .8s var(--out),transform .8s var(--out),filter .8s var(--out)}
+.reveal.in{opacity:1;transform:none;filter:none}
+
+@media (max-width:860px){
+  nav .links{display:none}
+  .grid{grid-template-columns:1fr}.card.wide{grid-column:auto}
+  .spots{grid-template-columns:1fr;gap:36px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .article{padding-right:44%}
+  .glass{width:40%}
+  footer .r{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none;filter:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#"><img src="/icon.svg" alt="">Margin</a>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#placement">Placement</a>
+      <a href="#light">Lightweight</a>
+      <a href="https://github.com/csakash/margin">GitHub</a>
+    </div>
+    <a class="btn primary" href="/download/Margin-0.1.0.dmg" download>Download</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="appicon"><img src="/icon.svg" alt="Margin app icon"><span class="sh"></span></div>
+    <h1>Notes that float <em>above everything.</em></h1>
+    <p class="sub">Margin is a tiny markdown notepad for your Mac that stays on top of what you're reading, even full-screen Chrome. Write in the margin, then fold it away to a thin line of light.</p>
+    <div class="ctas">
+      <a class="btn primary" href="/download/Margin-0.1.0.dmg" download>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.5 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.7.9-.8 0-2-.9-3.3-.9-1.7 0-3.2 1-4.1 2.5-1.8 3.1-.5 7.6 1.3 10.1.8 1.2 1.8 2.6 3.1 2.5 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4 1-1.4 1.3-2.7 1.4-2.8-.1 0-2.6-1-2.6-4.2zM14 5.2c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.6 2.8-1.4z"/></svg>
+        Download for macOS
+      </a>
+      <a class="btn ghost" href="https://github.com/csakash/margin">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17 4.8 18 5.1 18 5.1c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
+        Source on GitHub
+      </a>
+    </div>
+    <div class="meta">Free & open source · macOS 14+ · 2 MB · signed by Apple Developer ID</div>
+
+    <div class="stage reveal" id="stage">
+      <div class="bar"><i></i><i></i><i></i><span>margins.example/essays/quiet-power</span></div>
+      <div class="article">
+        <div class="k">ESSAY · 9 MIN READ</div>
+        <h3>The quiet power of writing in the margins</h3>
+        <p>Every serious reader eventually discovers that the best ideas show up mid-paragraph — not before you start, not after you finish.</p>
+        <p><mark>The note you take in the moment is worth ten you promise to write later.</mark> Most note tools ask you to leave. A margin never does.</p>
+        <p>It sits right next to the text, patient and empty, costing nothing to keep open all day.</p>
+      </div>
+      <div class="glass" id="glass">
+        <div class="in">
+          <div class="hd">Reading notes <b><i>＋</i><i>⌖</i><i>–</i></b></div>
+          <h4><s>#</s>Quiet power of margins</h4>
+          <div class="q">The note you take in the moment is worth ten you promise to write later.<small>— margins.example</small></div>
+          <div class="td on"><i></i><span>Read the full essay</span></div>
+          <div class="td"><i></i><span class="typing" id="typed"></span></div>
+          <div class="ft"><span>All notes 12 ⌃</span></div>
+        </div>
+        <div class="line"></div>
+        <div class="sheen"></div>
+      </div>
+      <div class="tag" id="tag">Chrome in full screen · Margin floats above it</div>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="eyebrow reveal">What it does</div>
+    <h2 class="reveal">Everything you need to think while you read. Nothing else.</h2>
+    <p class="lede reveal">One hotkey, one calm panel, plain files on your own disk.</p>
+    <div class="grid">
+      <div class="card wide reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M14 8h4v6h-4z"/></svg></div><h3>Floats over full-screen apps</h3><p>A floating panel that shows on every Space, including full-screen Chrome, without stealing focus from the page until you click in.</p></div>
+      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 4v16"/></svg></div><h3>Minimises to a line</h3><p>⌥ Space folds it into a thin glowing line on its edge. No text, no logo, no distraction.</p></div>
+      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 5v14M14 5v14M5 12h9M18 10l2-1v10"/></svg></div><h3>Markdown, styled live</h3><p>Headings, lists, checkboxes, quotes, code and dividers as you type. Press / for every block.</p></div>
+      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/></svg></div><h3>Drop anything in</h3><p>Images, videos, files and links. Drag a sentence from a page and it becomes a quote with its source.</p></div>
+      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="2.5"/></svg></div><h3>Snap & clip</h3><p>Grab a region screenshot, or clip the page you're on from Chrome, Arc, Safari, Brave or Edge.</p></div>
+      <div class="card wide reveal"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 14h18M8 17h3"/></svg></div><h3>All notes, one pull away</h3><p>A drawer slides up from the bottom and pushes your note up, never over it. Search everything instantly and filter by to-dos, media, links or quotes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="placement">
+  <div class="wrap spots">
+    <div>
+      <div class="eyebrow reveal">Placement</div>
+      <h2 class="reveal">Any edge. Any corner.</h2>
+      <p class="lede reveal" style="margin-bottom:0">Drag it and the screen dims, eight spots light up and a beam shows where it will land. Flick it and it carries on to the far side.</p>
+      <div class="keys reveal">
+        <div class="kv"><kbd>⌥</kbd><kbd>Space</kbd> minimise</div>
+        <div class="kv"><kbd>⌃⌥</kbd><kbd>←↑→↓</kbd> move</div>
+        <div class="kv"><kbd>⌥</kbd><kbd>N</kbd> new note</div>
+      </div>
+    </div>
+    <div class="screen reveal" id="screen"></div>
+  </div>
+</section>
+
+<section id="light">
+  <div class="wrap">
+    <div class="eyebrow reveal">Lightweight & private</div>
+    <h2 class="reveal">Built to stay open all day.</h2>
+    <p class="lede reveal">Native Swift with no web view and no dependencies. Your notes are plain markdown files in <code style="font-family:var(--mono);color:#ddd">~/Documents/Margin</code>. No account, no cloud, no tracking.</p>
+    <div class="stats">
+      <div class="stat reveal"><div class="v">28 MB</div><div class="k">memory footprint</div></div>
+      <div class="stat reveal"><div class="v">0.0%</div><div class="k">CPU while idle</div></div>
+      <div class="stat reveal"><div class="v">2 MB</div><div class="k">app size</div></div>
+      <div class="stat reveal"><div class="v">.md</div><div class="k">open, portable files</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2 class="reveal">Start writing in the margin.</h2>
+    <p class="lede reveal">Free, open source, and signed by an Apple Developer ID.</p>
+    <div class="ctas reveal">
+      <a class="btn primary" href="/download/Margin-0.1.0.dmg" download>Download for macOS</a>
+      <a class="btn ghost" href="https://github.com/csakash/margin">Star on GitHub</a>
+    </div>
+    <div class="meta">Requires macOS 14 Sonoma or later · Apple silicon</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Margin · MIT License</span>
+    <div class="r">
+      <a href="https://github.com/csakash/margin">GitHub</a>
+      <a href="https://github.com/csakash/margin/issues">Report an issue</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 60 + 'ms'; io.observe(el); });
+
+  // Pointer light on cards and the glass rim
+  const track = (el, xv, yv) => el.addEventListener('pointermove', e => {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty(xv, (e.clientX - r.left) + 'px'); el.style.setProperty(yv, (e.clientY - r.top) + 'px');
+  });
+  document.querySelectorAll('.card').forEach(c => track(c, '--cx', '--cy'));
+  const glass = document.getElementById('glass');
+  track(glass, '--mx', '--my');
+  glass.addEventListener('pointerleave', () => { glass.style.setProperty('--mx', '50%'); glass.style.setProperty('--my', '-30%'); });
+
+  // Hero demo: type a line, fold to the edge, unfold
+  const typed = document.getElementById('typed'), tag = document.getElementById('tag');
+  const line = 'Try ⌥Space while reading';
+  const glint = () => { if (RM) return; glass.classList.remove('glint'); void glass.offsetWidth; glass.classList.add('glint'); };
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  async function loop() {
+    for (;;) {
+      typed.textContent = '';
+      for (const ch of line) { typed.textContent += ch; await wait(RM ? 0 : 55); }
+      await wait(1600);
+      glass.classList.add('min'); tag.textContent = 'Minimised to a line on the edge'; glint();
+      await wait(2600);
+      glass.classList.remove('min'); tag.textContent = 'Chrome in full screen · Margin floats above it';
+      await wait(700); glint();
+      await wait(2800);
+    }
+  }
+  setTimeout(() => { glint(); loop(); }, 900);
+
+  // Placement diagram: 8 slots, cycling highlight
+  const scr = document.getElementById('screen');
+  const S = [['tl','c',4,4],['t','h',39,3],['tr','c',null,4],['r','v',null,39],['br','c',null,null],['b','h',39,null],['bl','c',4,null],['l','v',2,39]];
+  const els = S.map(([a, k, l, t]) => {
+    const d = document.createElement('div'); d.className = 'slot ' + k;
+    if (l !== null) d.style.left = l + '%'; else d.style.right = (k === 'v' ? 2 : 4) + '%';
+    if (t !== null) d.style.top = t + '%'; else d.style.bottom = (k === 'h' ? 3 : 4) + '%';
+    if (a === 't') d.style.top = '3%'; if (a === 'b') d.style.bottom = '3%';
+    scr.appendChild(d); return d;
+  });
+  let i = 3;
+  const step = () => { els.forEach(e => e.classList.remove('on')); els[i].classList.add('on'); i = (i + 1) % els.length; };
+  step(); if (!RM) setInterval(step, 1100);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="mBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26262a"/><stop offset=".5" stop-color="#0d0d0e"/><stop offset="1" stop-color="#040404"/>
+    </linearGradient>
+    <radialGradient id="mCone" cx=".5" cy="-.05" r=".75">
+      <stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".6" stop-color="#fff" stop-opacity=".02"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mRim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset=".22" stop-color="#fff" stop-opacity=".12"/><stop offset=".78" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity=".26"/>
+    </linearGradient>
+    <linearGradient id="mS3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a2a2a6"/><stop offset="1" stop-color="#55555a"/></linearGradient>
+    <linearGradient id="mS2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f7f8"/><stop offset="1" stop-color="#b9b9bd"/></linearGradient>
+    <linearGradient id="mGlass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".40"/><stop offset=".45" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/>
+    </linearGradient>
+    <linearGradient id="mGlassRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".35" stop-color="#fff" stop-opacity=".28"/><stop offset=".7" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/>
+    </linearGradient>
+    <linearGradient id="mClear" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="mFront"><rect x="222" y="118" width="168" height="276" rx="40"/></clipPath>
+    <clipPath id="mSq"><rect x="16" y="16" width="480" height="480" rx="112"/></clipPath>
+    <filter id="mFrost" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="mSoft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="20"/></filter>
+    <filter id="mShadow" x="-60%" y="-200%" width="220%" height="500%"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="mGlow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+
+  <!-- body: black glass squircle with top light cone -->
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#mBody)"/>
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#mCone)"/>
+  <!-- clearcoat: curved tank-shine band near the top -->
+  <g clip-path="url(#mSq)"><ellipse cx="256" cy="20" rx="230" ry="46" fill="url(#mClear)" opacity=".55"/></g>
+  <rect x="17.5" y="17.5" width="477" height="477" rx="110.5" fill="none" stroke="url(#mRim)" stroke-width="3"/>
+
+  <!-- floor shadow -->
+  <ellipse cx="262" cy="406" rx="128" ry="14" fill="#000" opacity=".9" filter="url(#mShadow)"/>
+
+  <!-- stacked notes, back to front -->
+  <rect x="126" y="188" width="98" height="138" rx="26" fill="url(#mS3)" opacity=".92"/>
+  <rect x="166" y="158" width="122" height="196" rx="32" fill="url(#mS2)"/>
+
+  <!-- frosted front sheet: blurred copy of what sits behind it -->
+  <g clip-path="url(#mFront)">
+    <rect x="222" y="118" width="168" height="276" fill="#151516"/>
+    <g filter="url(#mFrost)">
+      <rect x="166" y="158" width="122" height="196" rx="32" fill="#ececee"/>
+      <rect x="126" y="188" width="98" height="138" rx="26" fill="#8c8c90"/>
+    </g>
+    <rect x="222" y="118" width="168" height="276" fill="url(#mGlass)"/>
+    <ellipse cx="398" cy="306" rx="30" ry="92" fill="#c47b36" opacity=".6" filter="url(#mSoft)"/>
+    <ellipse cx="338" cy="196" rx="38" ry="66" fill="#000" opacity=".38" filter="url(#mSoft)"/>
+    <!-- the margin line + glowing cursor -->
+    <rect x="254" y="168" width="3" height="182" rx="1.5" fill="#fff" opacity=".5"/>
+    <circle cx="255.5" cy="168" r="10" fill="#fff" opacity=".9" filter="url(#mGlow)"/>
+    <circle cx="255.5" cy="168" r="4.5" fill="#fff"/>
+  </g>
+  <rect x="223.5" y="119.5" width="165" height="273" rx="38.5" fill="none" stroke="url(#mGlassRim)" stroke-width="3"/>
+</svg>
