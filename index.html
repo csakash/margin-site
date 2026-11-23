@@ -58,6 +58,19 @@ h1 em{font-style:normal;color:transparent;background:linear-gradient(180deg,#fff
 .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .meta{margin-top:18px;font:12px var(--mono);color:var(--tx3);letter-spacing:.02em}
 
+/* launch film */
+.film{position:relative;border-radius:22px;overflow:hidden;background:#000;aspect-ratio:16/9;max-width:100%;
+  box-shadow:0 0 0 1px rgba(255,255,255,.1),inset 0 1px 0 rgba(255,255,255,.12),0 40px 120px rgba(0,0,0,.9),0 0 140px rgba(255,255,255,.06)}
+.film::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,.06) 25%,rgba(255,255,255,.03) 75%,rgba(255,255,255,.14));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.film video{display:block;width:100%;height:100%;object-fit:cover}
+.film .play{position:absolute;left:50%;top:50%;width:92px;height:92px;margin:-46px 0 0 -46px;border:0;border-radius:50%;cursor:pointer;display:grid;place-items:center;
+  background:#fff;color:#000;box-shadow:0 0 0 1px #fff,0 0 40px rgba(255,255,255,.5),0 0 140px rgba(255,255,255,.2);transition:transform .2s var(--out),opacity .25s}
+.film .play svg{width:34px;height:34px;margin-left:5px}
+@media (hover:hover){.film .play:hover{transform:scale(1.06)}}
+.film.playing .play{opacity:0;pointer-events:none}
+
 /* hero stage */
 .stage{position:relative;margin:64px auto 0;max-width:1080px;aspect-ratio:16/9.4;border-radius:20px;overflow:hidden;background:#0a0a0a;
   box-shadow:0 0 0 1px rgba(255,255,255,.08),0 40px 120px rgba(0,0,0,.9),0 0 140px rgba(255,255,255,.05)}
@@ -196,6 +209,10 @@ footer .r{margin-left:auto;display:flex;gap:20px}
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17 4.8 18 5.1 18 5.1c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.9 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>
         Source on GitHub
       </a>
+      <a class="btn ghost" href="#film" id="watch">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+        Watch the film
+      </a>
     </div>
     <div class="meta">Free & open source · macOS 14+ · 2 MB · signed by Apple Developer ID</div>
 
@@ -224,6 +241,19 @@ footer .r{margin-left:auto;display:flex;gap:20px}
     </div>
   </div>
 </header>
+
+<section id="film">
+  <div class="wrap">
+    <div class="eyebrow reveal">The film</div>
+    <h2 class="reveal">See it in fifty seconds.</h2>
+    <div class="film reveal">
+      <video id="filmvid" src="/media/margin-launch.mp4" poster="/media/margin-launch-poster.jpg" preload="metadata" playsinline controls></video>
+      <button class="play" id="filmplay" aria-label="Play the Margin launch film">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
 
 <section id="features">
   <div class="wrap">
@@ -294,6 +324,16 @@ footer .r{margin-left:auto;display:flex;gap:20px}
 </footer>
 
 <script>
+// Launch film: a big glowing play button over the poster; plays with sound on click.
+(() => {
+  const v = document.getElementById('filmvid'), b = document.getElementById('filmplay'), box = v && v.closest('.film');
+  if (!v) return;
+  const play = () => { v.play().catch(() => {}); };
+  b.addEventListener('click', play);
+  v.addEventListener('play', () => box.classList.add('playing'));
+  v.addEventListener('ended', () => box.classList.remove('playing'));
+  document.getElementById('watch').addEventListener('click', () => setTimeout(play, 500));
+})();
 (() => {
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
