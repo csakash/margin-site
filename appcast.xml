@@ -4,13 +4,13 @@
     <title>Margin</title>
     <link>https://margin.motiontic.com/appcast.xml</link>
     <item>
-      <title>Margin 0.2.1</title>
-      <pubDate>Tue, 24 Nov 2026 07:41:15 +0000</pubDate>
-      <sparkle:version>0.2.1</sparkle:version>
-      <sparkle:shortVersionString>0.2.1</sparkle:shortVersionString>
+      <title>Margin 0.2.2</title>
+      <pubDate>Tue, 24 Nov 2026 08:35:47 +0000</pubDate>
+      <sparkle:version>0.2.2</sparkle:version>
+      <sparkle:shortVersionString>0.2.2</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<ul><li>Screenshots no longer bring up the macOS permission dialog every time</li><li>The welcome tour now asks for screenshot permission once, and you can skip it</li><li>Without permission, a card explains how to turn it on and reopens Margin for you</li></ul>]]></description>
-      <enclosure url="https://margin.motiontic.com/download/Margin-0.2.1.dmg" sparkle:edSignature="itA0N3yS+oCkNzFOma8FUDje0wlajmdn7wGOgT+DlEKTS+1QmTojGmHL0Df3ZvaIEwAC2eyH0SwxKZnUb1m+Bg==" length="2767691" type="application/octet-stream"/>
+      <description><![CDATA[<ul><li>Keyboard shortcuts work again: copy, paste, cut, undo, redo, select all and more</li><li>New shortcuts: bold, italic, inline code, headings, lists, find in note</li><li>Undo and redo are now saved with your note</li></ul>]]></description>
+      <enclosure url="https://margin.motiontic.com/download/Margin-0.2.2.dmg" sparkle:edSignature="/uWVjPkUqjTuS2k+0MKx+bE3EhXA+2oFk+nEMXI1slubC9oYji10MdfONSVaZZsSUueG5YpddmsM38ZtSLYvBA==" length="2779538" type="application/octet-stream"/>
     </item>
   </channel>
 </rss>
