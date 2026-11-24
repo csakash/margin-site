@@ -4,13 +4,13 @@
     <title>Margin</title>
     <link>https://margin.motiontic.com/appcast.xml</link>
     <item>
-      <title>Margin 0.2.0</title>
-      <pubDate>Tue, 24 Nov 2026 07:09:09 +0000</pubDate>
-      <sparkle:version>0.2.0</sparkle:version>
-      <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
+      <title>Margin 0.2.1</title>
+      <pubDate>Tue, 24 Nov 2026 07:41:15 +0000</pubDate>
+      <sparkle:version>0.2.1</sparkle:version>
+      <sparkle:shortVersionString>0.2.1</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<ul><li>Margin now updates itself: new versions download quietly and install with one click</li><li>A small glowing dot on the minimised line tells you an update is waiting</li><li>Check for Updates and an automatic-updates switch in the menu bar menu</li></ul>]]></description>
-      <enclosure url="https://margin.motiontic.com/download/Margin-0.2.0.dmg" sparkle:edSignature="9WEXGlVxGvCN2aUHO7zbdfXIdaKzZQ/Zi/4ta4QsUcQg1KswPIzysb/PO7kW86zRywIJMxVHB6F9W+Gy8K3hAA==" length="2755431" type="application/octet-stream"/>
+      <description><![CDATA[<ul><li>Screenshots no longer bring up the macOS permission dialog every time</li><li>The welcome tour now asks for screenshot permission once, and you can skip it</li><li>Without permission, a card explains how to turn it on and reopens Margin for you</li></ul>]]></description>
+      <enclosure url="https://margin.motiontic.com/download/Margin-0.2.1.dmg" sparkle:edSignature="itA0N3yS+oCkNzFOma8FUDje0wlajmdn7wGOgT+DlEKTS+1QmTojGmHL0Df3ZvaIEwAC2eyH0SwxKZnUb1m+Bg==" length="2767691" type="application/octet-stream"/>
     </item>
   </channel>
 </rss>
