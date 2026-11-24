@@ -7,3 +7,6 @@
   Referrer-Policy: strict-origin-when-cross-origin
 /media/*
   Cache-Control: public, max-age=86400
+/appcast.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=300
