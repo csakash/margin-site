@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>Margin</title>
+    <link>https://margin.motiontic.com/appcast.xml</link>
+    <item>
+      <title>Margin 0.2.0</title>
+      <pubDate>Tue, 24 Nov 2026 07:09:09 +0000</pubDate>
+      <sparkle:version>0.2.0</sparkle:version>
+      <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Margin now updates itself: new versions download quietly and install with one click</li><li>A small glowing dot on the minimised line tells you an update is waiting</li><li>Check for Updates and an automatic-updates switch in the menu bar menu</li></ul>]]></description>
+      <enclosure url="https://margin.motiontic.com/download/Margin-0.2.0.dmg" sparkle:edSignature="9WEXGlVxGvCN2aUHO7zbdfXIdaKzZQ/Zi/4ta4QsUcQg1KswPIzysb/PO7kW86zRywIJMxVHB6F9W+Gy8K3hAA==" length="2755431" type="application/octet-stream"/>
+    </item>
+  </channel>
+</rss>
