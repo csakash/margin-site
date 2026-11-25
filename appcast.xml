@@ -4,13 +4,13 @@
     <title>Margin</title>
     <link>https://margin.motiontic.com/appcast.xml</link>
     <item>
-      <title>Margin 0.2.3</title>
-      <pubDate>Wed, 25 Nov 2026 07:58:56 +0000</pubDate>
-      <sparkle:version>0.2.3</sparkle:version>
-      <sparkle:shortVersionString>0.2.3</sparkle:shortVersionString>
+      <title>Margin 0.3.0</title>
+      <pubDate>Wed, 25 Nov 2026 20:54:15 +0000</pubDate>
+      <sparkle:version>0.3.0</sparkle:version>
+      <sparkle:shortVersionString>0.3.0</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0.0</sparkle:minimumSystemVersion>
-      <description><![CDATA[<ul><li>Paste works: text copied anywhere now pastes into Margin, and ⌘Z undoes it</li><li>Copy, paste and every other shortcut now work whether or not Margin is the front app</li></ul>]]></description>
-      <enclosure url="https://margin.motiontic.com/download/Margin-0.2.3.dmg" sparkle:edSignature="bE7Axn6w9COPe4NoU9La7MP0HMRWuZkwltGvG2Pawu8ASBs3F4SCGMe9ZcL1Nd1PKMDbPU8vNBAVQQrUyyStDw==" length="2780618" type="application/octet-stream"/>
+      <description><![CDATA[<ul><li>Settings window (⌘,): change the Show / Minimise and New Note shortcuts to any combo you like</li><li>Margin tells you when a shortcut is already taken by macOS or another app, and keeps your old one</li><li>Tooltips and the welcome tour show your own shortcuts</li></ul>]]></description>
+      <enclosure url="https://margin.motiontic.com/download/Margin-0.3.0.dmg" sparkle:edSignature="Num8L9aeFHIuu7YqLvAQrqa0/vqnfHGPiJ98+4P0qruXeSQIdn+T8KenFo1aGZheUonIwj/VGNn1i5FjBwysBw==" length="2824495" type="application/octet-stream"/>
     </item>
   </channel>
 </rss>
